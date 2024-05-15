@@ -6,17 +6,20 @@ def main():
 def be_morelazy(strs: list):
     substrings_in_common_between_1_and_0 = {}
     slice_includes_0_and_1 = strs[:2]
+    # Find all the substrings in common between the first two words
     for index, word in enumerate(slice_includes_0_and_1):
         if len(strs) != 1:
+            # look if substrings of each of the first two words, are contained in both words
             if index == 0:
                 check_index = 1
             else:
                 check_index = 0
         else:
-            substrings_in_common_between_1_and_0[strs[0]] = len(strs[0])
-            break
+            # if there is only one string, then the longest substring in common is itself
+            return strs[0]
         word_len = len(word)
         if word_len == 1:
+            # if the length of a word is one, then it is the only possible substring of that word
             if word in slice_includes_0_and_1[check_index]:
                 substrings_in_common_between_1_and_0[word] = word_len
         else:
@@ -35,21 +38,19 @@ def be_morelazy(strs: list):
                                 moving_slice
                             )
                     displacement += 1
+            # check if whole word is a common substring
             if word in slice_includes_0_and_1[check_index]:
                 substrings_in_common_between_1_and_0[word] = word_len
     all_words_in_common = {}
     slice_from_2_to_end = strs[2:]
-    if len(strs) != 1:
-        for key, value in substrings_in_common_between_1_and_0.items():
-            for word_j in slice_from_2_to_end:
-                if key not in word_j:
-                    continue
-                else:
-                    all_words_in_common[key] = value
-        return max(all_words_in_common, key=all_words_in_common.get)
-    else:
-        all_words_in_common = substrings_in_common_between_1_and_0
-        return all_words_in_common
+    # Now we check all the other words in the list
+    for key, value in substrings_in_common_between_1_and_0.items():
+        for word_j in slice_from_2_to_end:
+            if key not in word_j:
+                continue
+            else:
+                all_words_in_common[key] = value
+    return max(all_words_in_common, key=all_words_in_common.get)
 
 
 if __name__ == "__main__":
