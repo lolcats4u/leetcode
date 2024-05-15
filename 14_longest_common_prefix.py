@@ -53,6 +53,7 @@ def be_morelazy(strs: list):
     try:
         return max(all_words_in_common, key=all_words_in_common.get)
     except ValueError:
+        # For case of no common substrings, the all_words_in_common dict is empty, and will not have a max
         return ""
 
 
