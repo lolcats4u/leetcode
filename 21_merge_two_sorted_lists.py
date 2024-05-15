@@ -7,7 +7,7 @@ def main():
 
 
 def merge_two_lists(node1, node2):
-    if node1.next != None and node2.next != None:
+    if node1 != None and node2 != None:
         if node1.val > node2.val:
             node = ListNode()
             node.val = node2.val
@@ -16,10 +16,33 @@ def merge_two_lists(node1, node2):
             node = ListNode()
             node.val = node1.val
             node.next = merge_two_lists(node1.next, node2)
-    elif not node1.next and node2.next:
-        print("do_something")
-    elif not node2.next and node1.next:
-        print("do_something")
+    elif not node1 and node2:
+        node = ListNode()
+        node.val = node2.val
+        node.next=merge_two_lists(node1, node2.next)
+    elif not node2 and node1:
+        node = ListNode()
+        node.val = node1.val
+        node.next = merge_two_lists(node1.next,node2)
+    elif node1 = None and node2 = None:
+        if node1.val > node2.val:
+            node = ListNode()
+            node.val = node2.val
+
+            end_node = ListNode()
+            end_node.val = node1.val
+            end_node.next = None
+            node.next = end_node
+            return node
+        else:
+            node = ListNode()
+            node.val = node1.val
+            end_node = ListNode()
+            end_node.val = node2.val
+            end_node.next = None
+            node.next = end_node
+            return node
+    
 
 
 def list_to_node(list_of_nums: list):
