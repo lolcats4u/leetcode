@@ -6,17 +6,14 @@ def main():
 
 
 def list_to_list_of_list_nodes(list_of_nums: list):
-    for index, num in enumerate(list_of_nums):
-        try:
-            node = ListNode()
-            node.val = num
-            node.next = list_to_list_of_list_nodes(list_of_nums[index:])
-            return node
-        except IndexError:
-            node = ListNode()
-            node.val = num
-            node.next = None
-            return node
+    if len(list_of_nums) == 1:
+        node = ListNode()
+        node.val = list_of_nums[0]
+        node.next = None
+    else:
+        node = ListNode()
+        node.val = list_of_nums[0]
+        node.next = list_of_nums[1:]
     return node
 
 
