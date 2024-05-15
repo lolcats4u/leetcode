@@ -6,18 +6,6 @@ def main():
     print(mergeTwoLists(node_list_1, node_list_2))
 
 
-def mergeTwoLists(list1: list, list2: list) -> list:
-    new_list = []
-    for num_pair in zip(list1, list2):
-        if num_pair[0] > num_pair[1]:
-            new_list.append(num_pair[1])
-            new_list.append(num_pair[0])
-        else:
-            new_list.append(num_pair[0])
-            new_list.append(num_pair[1])
-    return new_list
-
-
 def list_to_list_of_list_nodes(list_of_nums: list):
     list_of_list_nodes = []
     for index, num in enumerate(list_of_nums):
