@@ -1,5 +1,6 @@
 def main():
-    str_list = ["a"]
+    str_list = ["c", "acc", "ccc"]
+
     prefix = longest_common_prefix(str_list)
     print(prefix)
 
@@ -7,31 +8,46 @@ def main():
 def longest_common_prefix(strs: list):
     prefixes_total = []
     word_prefixes = []
+    non_redundant_list = list(set(strs))
+    if len(non_redundant_list) == 1:
+        return strs[0]
 
-    for word in strs:
-        word_prefixes.append(word)
-        for end_index in range(len(word)):
-            if end_index == 0:
-                continue
-            else:
-                word_slice = word[0:end_index]
-                word_prefixes.append(word_slice)
-        prefixes_total.append(word_prefixes)
-        word_prefixes = []
+    two_words = non_redundant_list[0:2]
+    for index, word in enumerate(two_words):
+        if index == 0:
+            check_index = 1
+        else:
+            check_index = 0
+        if word in two_words[check_index][0 : len(word)]:
+            word_prefixes.append(word)
+        if len(word) != 1:
+            for index in range(len(word)):
+                word_slice = word[:-index]
+                if (
+                    word_slice in two_words[check_index][0 : len(word_slice)]
+                    and word_slice != ""
+                    and word_slice not in word_prefixes
+                ):
+                    word_prefixes.append(word_slice)
 
-    prefixes_in_common = {}
-    for word_i in prefixes_total:
-        for prefix in word_i:
-            common_prefix = True
-            for word_j in strs:
-                if prefix not in word_j:
-                    common_prefix = False
-            if common_prefix:
-                prefixes_in_common[prefix] = len(prefix)
+    if len(non_redundant_list) == 2:
+        all_but_two = two_words
+    else:
+        all_but_two = non_redundant_list[2:]
+    for word in all_but_two:
+        for prefix in word_prefixes:
+            if prefix not in word[0 : len(prefix)]:
+                if prefix in prefixes_total:
+                    prefixes_total.remove(prefix)
+                    continue
+                else:
+                    continue
             else:
-                common_prefix = True
-                continue
-    return max(prefixes_in_common, key=prefixes_in_common.get)
+                prefixes_total.append(prefix)
+    try:
+        return max(prefixes_total)
+    except ValueError:
+        return ""
 
 
 if __name__ == "__main__":
