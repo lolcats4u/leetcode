@@ -50,7 +50,10 @@ def be_morelazy(strs: list):
                 continue
             else:
                 all_words_in_common[key] = value
-    return max(all_words_in_common, key=all_words_in_common.get)
+    try:
+        return max(all_words_in_common, key=all_words_in_common.get)
+    except ValueError:
+        return ""
 
 
 if __name__ == "__main__":
