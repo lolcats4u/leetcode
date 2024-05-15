@@ -3,6 +3,23 @@ def main():
     list2 = [1, 3, 4]
     node_list_1 = list_to_node(list1)
     node_list_2 = list_to_node(list2)
+    print("meow")
+
+
+def merge_two_lists(node1, node2):
+    if node1.next != None and node2.next != None:
+        if node1.val > node2.val:
+            node = ListNode()
+            node.val = node2.val
+            node.next = merge_two_lists(node1, node2.next)
+        else:
+            node = ListNode()
+            node.val = node1.val
+            node.next = merge_two_lists(node1.next, node2)
+    elif not node1.next and node2.next:
+        print("do_something")
+    elif not node2.next and node1.next:
+        print("do_something")
 
 
 def list_to_node(list_of_nums: list):
