@@ -19,30 +19,15 @@ def merge_two_lists(node1, node2):
     elif not node1 and node2:
         node = ListNode()
         node.val = node2.val
-        node.next=merge_two_lists(node1, node2.next)
+        node.next = merge_two_lists(node1, node2.next)
     elif not node2 and node1:
         node = ListNode()
         node.val = node1.val
-        node.next = merge_two_lists(node1.next,node2)
-    elif node1 = None and node2 = None:
-        if node1.val > node2.val:
-            node = ListNode()
-            node.val = node2.val
+        node.next = merge_two_lists(node1.next, node2)
 
-            end_node = ListNode()
-            end_node.val = node1.val
-            end_node.next = None
-            node.next = end_node
-            return node
-        else:
-            node = ListNode()
-            node.val = node1.val
-            end_node = ListNode()
-            end_node.val = node2.val
-            end_node.next = None
-            node.next = end_node
-            return node
-    
+    elif node1 == None and node2 == None:
+        None
+    return node
 
 
 def list_to_node(list_of_nums: list):
