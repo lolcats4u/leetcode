@@ -1,32 +1,35 @@
 def main():
     list1 = [1, 2, 4]
     list2 = [1, 3, 4]
-    node_list_1 = list_to_node(list1)
-    node_list_2 = list_to_node(list2)
+    list1 = list_to_node(list1)
+    list2 = list_to_node(list2)
+    node = mergeTwoLists(list1, list2)
+    print(node)
     print("meow")
 
 
-def merge_two_lists(node1, node2):
-    if node1 != None and node2 != None:
-        if node1.val > node2.val:
+def mergeTwoLists(list1, list2):
+    if list1 is not None and list2 is not None:
+        if list1.val > list2.val:
             node = ListNode()
-            node.val = node2.val
-            node.next = merge_two_lists(node1, node2.next)
+            node.val = list2.val
+            node.next = mergeTwoLists(list1, list2.next)
         else:
             node = ListNode()
-            node.val = node1.val
-            node.next = merge_two_lists(node1.next, node2)
-    elif not node1 and node2:
+            node.val = list1.val
+            node.next = mergeTwoLists(list1.next, list2)
+    elif not list1 and list2:
         node = ListNode()
-        node.val = node2.val
-        node.next = merge_two_lists(node1, node2.next)
-    elif not node2 and node1:
+        node.val = list2.val
+        node.next = mergeTwoLists(list1, list2.next)
+    elif not list2 and list1:
         node = ListNode()
-        node.val = node1.val
-        node.next = merge_two_lists(node1.next, node2)
+        node.val = list1.val
+        node.next = mergeTwoLists(list1.next, list2)
 
-    elif node1 == None and node2 == None:
-        None
+    elif list1 is None and list2 is None:
+        return None
+
     return node
 
 
@@ -46,6 +49,9 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
+    def __str__(self):
+        return f"NodeObject(val: {self.val}, next: {self.next})"
 
 
 if __name__ == "__main__":
