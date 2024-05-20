@@ -3,8 +3,8 @@ def main():
     nums = [3, 2, 2, 3]
     val = 3
     solution = Solution()
-    my_awnswer = solution.removeElement(nums, val)
-    print(my_awnswer)
+    my_answer = solution.removeElement(nums, val)
+    print(my_answer)
 
 
 class Solution:
