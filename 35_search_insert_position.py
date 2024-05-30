@@ -7,7 +7,7 @@
 
 def main():
     nums = [1, 3, 5, 6]
-    target = 7
+    target = 0
     solution = Solution()
     stuff = solution.searchInsert(nums, target)
     print(stuff)
@@ -15,29 +15,27 @@ def main():
 
 class Solution:
     def __init__(self):
+        self.index = 0
         self.original_list = None
-        self.index = None
 
     def searchInsert(self, nums: list, target: int) -> int:
         half_len = len(nums) // 2
-        head = nums[0:half_len]
-        tail = nums[half_len:]
-        if not self.original_list:
+        if self.original_list is None:
             self.original_list = nums
 
-        if not self.index:
-            if len(nums) > 1:
-                if target > head[-1]:
-                    self.searchInsert(tail, target)
-                else:
-                    self.searchInsert(head, target)
+        if len(nums) == 1:
+            if target > nums[0]:
+                self.index = self.index
             else:
-                num = nums[0]
-                original_list = self.original_list
-                if target > nums[0]:
-                    self.index = original_list.index(num) + 1
-                else:
-                    self.index = original_list.index(num)
+                self.index = self.index + 1
+        else:
+            if nums[half_len] > target:
+                self.index = self.index + (half_len - 1)
+                self.searchInsert(nums[0:half_len], target)
+            else:
+                self.index = self.index + half_len
+                self.searchInsert(nums[half_len:], target)
+
         return self.index
 
 
