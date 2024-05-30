@@ -7,17 +7,19 @@
 # Increment the large integer by one and return the resulting array of digits.
 def main():
     solution = Solution()
-    print(solution.plusOne)
+    print(solution.plusOne([9]))
 
 
 class Solution:
     def plusOne(self, digits: list) -> list:
         num = 0
         order_of_magnitude = 1
+        digits = list(map(int, digits))
         for digit in reversed(digits):
-            num = num + digit(order_of_magnitude)
+            num += digit * order_of_magnitude
             order_of_magnitude = order_of_magnitude * 10
-        return num + 1
+        num = num + 1
+        return [int(x) for x in str(num)]
 
 
 if __name__ == "__main__":
