@@ -1,7 +1,7 @@
 def main():
-    print("Meow")
+    print("cat")
     solution = Solution()
-    print(solution)
+    print(solution.mySqrt(8))
 
 
 class Solution:
@@ -11,26 +11,26 @@ class Solution:
         self.ceiling_perfect = 0
 
     def mySqrt(self, x: int) -> int:
-        self.find_nearest_perfect_squares(self, x)
-        self.find_sqrt(self.floor_perfect, self.ceiling_perfect)
+        self.find_nearest_perfect_squares(x=x)
+        self.find_sqrt(x=x, floor=self.floor_perfect, ceiling=self.ceiling_perfect)
 
         return int("%.0f" % (self.sqrt))
 
     def find_nearest_perfect_squares(self, x: int):
-        floor_int = 0
-        while (floor_int * floor_int) < (x * x):
-            floor_int += 1
-        self.floor_perfect = floor_int
-        self.ceiling_perfect = floor_int + 1
+        ceiling_square = 0
+        while (ceiling_square * ceiling_square) < x:
+            ceiling_square += 1
+        self.floor_perfect = ceiling_square - 1
+        self.ceiling_perfect = ceiling_square
 
     def find_sqrt(self, x: int, floor, ceiling):
         average = (floor + ceiling) / 2
         average_squared = average * average
 
         if average_squared < x:
-            self.find_sqrt(self, average, ceiling)
+            self.find_sqrt(x=x, floor=average, ceiling=ceiling)
         elif average_squared > x:
-            self.find_sqrt(self, floor, average)
+            self.find_sqrt(x=x, floor=floor, ceiling=average)
         else:
             self.sqrt = average
 
