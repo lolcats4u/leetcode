@@ -24,88 +24,23 @@ class Solution:
     def addBinary(self, a: str, b: str) -> str:
         biggest_str, smallest_str = self.determine_biggest(a, b)
         self.find_bin_sum(biggest_str, smallest_str)
+        return self.sum
 
-        if self.sum[0] == "0":
-            return self.sum[1:]
-        else:
-            return self.sum
-
-    def find_bin_sum(self, biggest_str: str, smallest_str: str):
-        ##### opportunities for early exit
-        if self.a_len == 1 and self.b_len == 1:
-            self.cast_bin_int_bin(int(biggest_str[0]), int(smallest_str[0]))
-            # capture remaining carry
-            self.cast_bin_int_bin(0, 0)
-            return
-
-        if self.a_len == 2 or self.b_len == 2:
-            if self.diff == 0:
-                for i in range(-1, -2):
-                    self.cast_bin_int_bin(int(biggest_str[i]), int(smallest_str[i]))
-                self.cast_bin_int_bin(0, 0)
-                return
-            else:
-                for i in range(-1, -3, -1):
-                    self.cast_bin_int_bin(int(biggest_str[i]), int(smallest_str[i]))
-                start_index = -3
-                if self.carry == 1:
-                    while self.carry == 1:
-                        try:
-                            self.cast_bin_int_bin(int(biggest_str[start_index]), 0)
-                            start_index -= 1
-                        except IndexError:
-                            self.cast_bin_int_bin(0, 0)
-                            return
-                    front_slice = self.bigger_len + start_index
-                    if front_slice == 0:
-                        self.sum = biggest_str[0] + self.sum
-                        return
-                    else:
-                        self.sum = biggest_str[:front_slice] + self.sum
-                        return
-
-                self.cast_bin_int_bin(int(biggest_str[-2]), 0)
-                self.cast_bin_int_bin(0, 0)
-                return
-        #####
-
-        else:
-            # diff should be positive
-            if self.diff != 0:
-                start = -1
-                stop = -(self.smaller_len + 1)
-
-            else:
-                start = -1
-                stop = -(self.bigger_len + 1)
-
-            # iterate from the back until you've gone over the whole length of the smallest str
-            for i in range(start, stop, -1):
+    def find_bin_sum(self, biggest_str, smallest_str):
+        for i in range(-1, -(self.bigger_len + 1), -1):
+            try:
                 self.cast_bin_int_bin(int(biggest_str[i]), int(smallest_str[i]))
-
-            # handle last carry digit
-            if self.diff == 0:
-                self.cast_bin_int_bin(0, 0)
+            except IndexError:
+                start_index = self.smaller_len + 1
+                while start_index <= self.bigger_len:
+                    self.cast_bin_int_bin(0, int(biggest_str[-start_index]))
+                    start_index += 1
+                while self.carry == 1:
+                    self.cast_bin_int_bin(0, 0)
                 return
-
-            # append remaining digits
-            else:
-                if self.carry == 1:
-                    start_index = -(self.smaller_len + 1)
-                    while self.carry == 1:
-                        try:
-                            self.cast_bin_int_bin(int(biggest_str[start_index]), 0)
-                            start_index -= 1
-                        except IndexError:
-                            self.cast_bin_int_bin(0, 0)
-                            return
-                    self.sum = biggest_str[: self.diff + start_index] + self.sum
-                    return
-                else:
-                    slice = biggest_str[: self.diff] + self.sum
-                    self.sum = biggest_str[0 : self.diff] + self.sum
-
-                return
+        while self.carry == 1:
+            self.cast_bin_int_bin(0, 0)
+        return
 
     def cast_bin_int_bin(self, num1: int, num2: int):
         int_sum = num1 + num2 + self.carry
