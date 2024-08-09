@@ -1,8 +1,11 @@
 def main():
-    test1 = ["11", "1"]
+    test1 = ["101111", "10"]
     test2 = ["1010", "1011"]
     test3 = ["10101011", "1010"]
-    tests = [test1, test2, test3]
+    test4 = ["1", "11"]
+    test5 = ["1", "111"]
+    test6 = ["100", "110010"]
+    tests = [test1, test2, test3, test4, test5, test6]
     for test in tests:
         Solution().addBinary(test[0], test[1])
 
@@ -42,7 +45,25 @@ class Solution:
                 self.cast_bin_int_bin(0, 0)
                 return
             else:
-                self.cast_bin_int_bin(int(biggest_str[-1]), int(biggest_str[-1]))
+                for i in range(-1, -3, -1):
+                    self.cast_bin_int_bin(int(biggest_str[i]), int(smallest_str[i]))
+                start_index = -3
+                if self.carry == 1:
+                    while self.carry == 1:
+                        try:
+                            self.cast_bin_int_bin(int(biggest_str[start_index]), 0)
+                            start_index -= 1
+                        except IndexError:
+                            self.cast_bin_int_bin(0, 0)
+                            return
+                    front_slice = self.bigger_len + start_index
+                    if front_slice == 0:
+                        self.sum = biggest_str[0] + self.sum
+                        return
+                    else:
+                        self.sum = biggest_str[:front_slice] + self.sum
+                        return
+
                 self.cast_bin_int_bin(int(biggest_str[-2]), 0)
                 self.cast_bin_int_bin(0, 0)
                 return
@@ -69,8 +90,21 @@ class Solution:
 
             # append remaining digits
             else:
-                self.cast_bin_int_bin(0, int(biggest_str[-(self.smaller_len + 1)]))
-                self.sum = biggest_str[0 : self.diff - 1] + self.sum
+                if self.carry == 1:
+                    start_index = -(self.smaller_len + 1)
+                    while self.carry == 1:
+                        try:
+                            self.cast_bin_int_bin(int(biggest_str[start_index]), 0)
+                            start_index -= 1
+                        except IndexError:
+                            self.cast_bin_int_bin(0, 0)
+                            return
+                    self.sum = biggest_str[: self.diff + start_index] + self.sum
+                    return
+                else:
+                    slice = biggest_str[: self.diff] + self.sum
+                    self.sum = biggest_str[0 : self.diff] + self.sum
+
                 return
 
     def cast_bin_int_bin(self, num1: int, num2: int):
