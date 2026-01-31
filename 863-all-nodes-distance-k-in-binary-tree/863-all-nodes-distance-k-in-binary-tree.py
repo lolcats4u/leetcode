@@ -1,5 +1,10 @@
 def main(root, target, k):
-    solution = Solution().distanceK(root[0], target, k)
+    node_num = 1
+    layer_width= 1
+    current_layer = []
+    binary_tree = transform(root)
+
+    solution = Solution().distanceK(binary_tree, target, k)
 
 def tests():
     test_1 = {"root": [3,5,1,6,2,0,8,None,None,7,4],
@@ -13,27 +18,41 @@ def tests():
     
     return locals()
 
-class TreeTransform():
-    def __init__(self, binary_tree_list):
-        self.binary_tree_list = binary_tree_list
-        self.head = None
-        self.list_index = 0
-    
-    def transform(self, prev=None):
-            if not self.head:
-                self.head = TreeNode(self.binary_tree_list[self.list_index])
-                self.head.left = None
-            try:
-                self.head.right = self.binary_tree_list[self.list_index+1]
-            except KeyError:
-                self.head.right = None
-                return self.head
-            
-            TreeNode()
+node_num = 1
+layer_width= 1
+current_layer = []
 
 
+def transform(binary_tree_list:list=None, head:TreeNode=None, node_num:int=1, layer_width=1, current_window = [], current_layer=[], tree_head=None):
+    if not head:
+        head = TreeNode(binary_tree_list[0])
+        tree_head = head
+        head.left = TreeNode(binary_tree_list[1])
+        head.right = TreeNode(binary_tree_list[2])
+        node_num = node_num + 2
+        layer_width = 4
+        current_layer = binary_tree_list[3:7]
+        current_window = current_layer
+    current_window_length = len(current_window)
+    if current_window_length > 2:
+        half = current_window_length // 2
+        transform(binary_tree_list, head.left, node_num, layer_width, current_layer=current_layer ,current_window=current_window[:half])
+        transform(binary_tree_list, head.right, node_num, layer_width, current_layer=current_layer, current_window=current_window[half:])
+    elif current_window_length == 2:
+        node_num += 2
+        head.left = TreeNode(current_window[0])
+        head.right = TreeNode(current_window[1])
 
-            self.transform(self, prev)
+        if node_num == len(binary_tree_list):
+            return tree_head
+        if len(remainder) < layer_width:
+            while len(remainder)< layer_width:
+                binary_tree_list += None
+            current_layer = binary_tree_list[node_num + 1:]
+            half = len(current_layer)/2
+            transform(binary_tree_list,head.left, node_num, layer_width, current_window=current_layer[:half+1])
+            transform(binary_tree_list,head.right, node_num, layer_width,tcurrent_window=current_layer[half:])
+
             
 class TreeNode:
     def __init__(self, x):
