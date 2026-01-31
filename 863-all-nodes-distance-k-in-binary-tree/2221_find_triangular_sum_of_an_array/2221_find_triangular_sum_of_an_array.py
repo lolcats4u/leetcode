@@ -12,7 +12,7 @@ class Solution:
     def triangularSum(self, nums: List[int]) -> int:
         if not self.triangular_sum:
             if len(nums) == 1:
-                self.triangular_sum = nums
+                self.triangular_sum = nums[0]
                 return self.triangular_sum
             else:
                 new_sum_list = []
