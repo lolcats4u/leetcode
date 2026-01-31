@@ -8,19 +8,16 @@ def tests():
     return locals().values()
 
 class Solution:
-    def __init__(self):
-        self.triangular_sum = None
     def triangularSum(self, nums: List[int]) -> int:
         if len(nums) == 1:
-            self.triangular_sum = nums[0]
-            return self.triangular_sum
+            return nums[0]
         else:
             new_sum_list = []
             for i, val in enumerate(nums):
                 try:
                     new_sum_list.append((val + nums[i + 1]) % 10)
                 except IndexError:
-                    self.triangularSum(new_sum_list)
+                    return self.triangularSum(new_sum_list)
             
 
 
