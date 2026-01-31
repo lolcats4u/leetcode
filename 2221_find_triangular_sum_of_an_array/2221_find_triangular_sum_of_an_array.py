@@ -13,13 +13,9 @@ class Solution:
             return nums[0]
         else:
             new_sum_list = []
-            for i, val in enumerate(nums):
-                try:
-                    new_sum_list.append((val + nums[i + 1]) % 10)
-                except IndexError:
-                    return self.triangularSum(new_sum_list)
-            
-
+            for i in range(len(nums)-1):
+                new_sum_list.append(((nums[i] + nums[i+1]) % 10))
+            return self.triangularSum(new_sum_list)
 
 if __name__ == "__main__":
     tests = tests()
