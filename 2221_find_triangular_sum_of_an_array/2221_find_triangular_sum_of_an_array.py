@@ -12,10 +12,7 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         else:
-            new_sum_list = []
-            for i in range(len(nums)-1):
-                new_sum_list.append(((nums[i] + nums[i+1]) % 10))
-            return self.triangularSum(new_sum_list)
+            return self.triangularSum([((nums[x] + nums[x + 1]) % 10) for x in range(len(nums)-1)])
 
 if __name__ == "__main__":
     tests = tests()
