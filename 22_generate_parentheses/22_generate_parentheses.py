@@ -16,7 +16,6 @@ class Solution:
         
         def branch_case(parenthesis_string:str, count, parenthesis_options:list, *cases):
             for case in cases:
-                parenthesis_string = ""
                 while len(parenthesis_string) != (count *2):
                     parenthesis_string += branch_case(case(parenthesis_string), count, parenthesis_options, cases)
                 parenthesis_options.append(parenthesis_string)
