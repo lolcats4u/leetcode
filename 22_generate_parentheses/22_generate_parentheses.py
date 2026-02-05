@@ -23,7 +23,7 @@ class Solution:
             if n != 0:
                 n -= 1
                 paren_option_1 = paren_option + f"(){self.generateParenthesis(n)}"
-                paren_option_2 += case_1(n, paren_option_1, options)
+                paren_option_2 = case_1(n, paren_option_1, options)
             else:
                 options.append(paren_option_1, paren_option_2)
         
