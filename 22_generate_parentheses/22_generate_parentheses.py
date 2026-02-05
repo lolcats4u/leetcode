@@ -28,8 +28,8 @@ class Solution:
                 options.append(paren_option_1, paren_option_2)
         
         while count_case_1 != 0 and count_case_2 != 0:
-            case_1 = case_1(count_case_1, "", self.parentheses_options)
-            case_2 = case_2(count_case_2, "", self.parentheses_options)
+            case_1(count_case_1, "", self.parentheses_options)
+            case_2(count_case_2, "", self.parentheses_options)
 
 def tests():
     test_1 = 3
