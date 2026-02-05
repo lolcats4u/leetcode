@@ -18,8 +18,10 @@ class Solution:
             for case in cases:
                 parenthesis_string = ""
                 while len(parenthesis_string) != (count *2):
-                    parenthesis_string = branch_case(case(parenthesis_string), count, parenthesis_options, cases)
+                    parenthesis_string += branch_case(case(parenthesis_string), count, parenthesis_options, cases)
                 parenthesis_options.append(parenthesis_string)
+        
+        branch_case("", n, self.parentheses_options, case_1, case_2)
 
 def tests():
     test_1 = 3
