@@ -15,7 +15,6 @@ class Solution:
             return (parenthesis_string + f"(){case_2(parenthesis_string, n)}")
         
         def branch_case(parenthesis_string:str, count, parenthesis_options:list, *cases):
-            cases = []
             for case in cases:
                 parenthesis_string = ""
                 while len(parenthesis_string) != (count *2):
