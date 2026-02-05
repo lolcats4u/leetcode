@@ -10,22 +10,23 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         count_case_1 = n
         count_case_2 = n
-        def case_1(n,paren_option, options):
+
+        def case_1(n,parenthesis_string, list_of_parenthesis_options):
                 if n != 0:
                     n -=1
-                    paren_option_1 = paren_option + f"({self.generateParenthesis(n)})"
-                    paren_option_2 = case_2(n, paren_option_1, options)
+                    new_parenthesis_string_1 = parenthesis_string + f"({self.generateParenthesis(n)})"
+                    new_parenthesis_string_2 = case_2(n, new_parenthesis_string_1, list_of_parenthesis_options)
 
                 else: 
-                    options.append(paren_option_1, paren_option_2)
+                    list_of_parenthesis_options.append(new_parenthesis_string_1, new_parenthesis_string_2)
 
-        def case_2(n, paren_option, options):
+        def case_2(n, parenthesis_string, list_of_parenthesis_options):
             if n != 0:
                 n -= 1
-                paren_option_1 = paren_option + f"(){self.generateParenthesis(n)}"
-                paren_option_2 = case_1(n, paren_option_1, options)
+                new_parenthesis_string_1 = parenthesis_string + f"(){self.generateParenthesis(n)}"
+                new_parenthesis_string_2 = case_1(n, new_parenthesis_string_1, list_of_parenthesis_options)
             else:
-                options.append(paren_option_1, paren_option_2)
+                list_of_parenthesis_options.append(new_parenthesis_string_1, new_parenthesis_string_2)
         
         while count_case_1 != 0 and count_case_2 != 0:
             case_1(count_case_1, "", self.parentheses_options)
