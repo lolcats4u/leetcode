@@ -11,10 +11,14 @@ class Solution:
         def case_1(parenthesis_string:str, count:int) -> str:
             if len(parenthesis_string) != (2*count):
                 return (parenthesis_string + f"({case_1(parenthesis_string, n)})")
+            else:
+                return parenthesis_string
 
         def case_2(parenthesis_string, count:int) -> str:
             if len(parenthesis_string) != (2*count): 
                 return (parenthesis_string + f"(){case_2(parenthesis_string, n)}")
+            else:
+                return parenthesis_string
         
         def branch_case(parenthesis_string:str, count, parenthesis_options:list, *cases):
             for case in cases:
