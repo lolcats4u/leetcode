@@ -8,29 +8,19 @@ class Solution:
     def __init__(self):
         self.parentheses_options = []
     def generateParenthesis(self, n: int) -> List[str]:
-        count_case_1 = n
-        count_case_2 = n
+        def case_1(parenthesis_string:str) -> str:
+            return (parenthesis_string + f"({case_1(parenthesis_string, n)})")
 
-        def case_1(n,parenthesis_string, list_of_parenthesis_options):
-                if n != 0:
-                    n -=1
-                    new_parenthesis_string_1 = parenthesis_string + f"({self.generateParenthesis(n)})"
-                    new_parenthesis_string_2 = case_2(n, new_parenthesis_string_1, list_of_parenthesis_options)
-
-                else: 
-                    list_of_parenthesis_options.append(new_parenthesis_string_1, new_parenthesis_string_2)
-
-        def case_2(n, parenthesis_string, list_of_parenthesis_options):
-            if n != 0:
-                n -= 1
-                new_parenthesis_string_1 = parenthesis_string + f"(){self.generateParenthesis(n)}"
-                new_parenthesis_string_2 = case_1(n, new_parenthesis_string_1, list_of_parenthesis_options)
-            else:
-                list_of_parenthesis_options.append(new_parenthesis_string_1, new_parenthesis_string_2)
+        def case_2(parenthesis_string) -> str:
+            return (parenthesis_string + f"(){case_2(parenthesis_string, n)}")
         
-        while count_case_1 != 0 and count_case_2 != 0:
-            case_1(count_case_1, "", self.parentheses_options)
-            case_2(count_case_2, "", self.parentheses_options)
+        def branch_case(parenthesis_string:str, count, parenthesis_options:list, *cases):
+            cases = []
+            for case in cases:
+                parenthesis_string = ""
+                while len(parenthesis_string) != (count *2):
+                    parenthesis_string = branch_case(case(parenthesis_string), count, parenthesis_options, cases)
+                parenthesis_options.append(parenthesis_string)
 
 def tests():
     test_1 = 3
