@@ -7,11 +7,7 @@ def main(test):
 class Solution:
     def __init__(self):
         self.parentheses_options = []
-        self.count = None
     def generateParenthesis(self, n: int) -> List[str]:
-        if self.count !=0:
-            if not self.count:
-                self.count = n
         count_case_1 = n
         count_case_2 = n
         def case_1(n,paren_option, options):
@@ -31,11 +27,9 @@ class Solution:
             else:
                 options.append(paren_option_1, paren_option_2)
         
-        while self.count != 0:
+        while count_case_1 != 0 and count_case_2 != 0:
             case_1 = case_1(count_case_1, "", self.parentheses_options)
             case_2 = case_2(count_case_2, "", self.parentheses_options)
-            if count_case_1 == 0 and count_case_2 == 0:
-                self.count = 0
 
 def tests():
     test_1 = 3
