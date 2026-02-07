@@ -25,7 +25,7 @@ class Solution:
                         grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid[row_index][column_index - 1])
                         grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid[row_index - 1][column_index])
                         mins += 1
-                    except IndexError
+                    except IndexError:
                         mins += 0
                 else:
                     mins += 0
