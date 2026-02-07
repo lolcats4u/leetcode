@@ -23,28 +23,34 @@ class Solution:
         if seen_fresh_orange:
             for row_index in range(column_len):
                 for column_index in range(row_len):
+                    successful_rot = False
                     if grid[row_index][column_index] == 2:
                         try:
                             if grid[row_index][column_index + 1] == 1:
                                 grid[row_index][column_index + 1] = 2
+                                successful_rot = True
                         except IndexError:
                             continue
                         try:
                             if grid[row_index + 1][column_index] == 1:
-                                grid[row_index + 1][column_index] = 2 
+                                grid[row_index + 1][column_index] = 2
+                                successful_rot = True
                         except IndexError:
                             continue
                         try:
                             if grid[row_index][column_index - 1] == 1:
                                 grid[row_index][column_index - 1] = 2 
+                                successful_rot = True
                         except IndexError:
                             continue
                         try:
                             if grid[row_index - 1][column_index] == 1:
                                 grid[row_index - 1][column_index] = 2 
+                                successful_rot = True
                         except IndexError:
                             continue
-                        mins += 1
+                        if successful_rot:
+                            mins += 1
         else:
             return 0
 
