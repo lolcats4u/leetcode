@@ -11,35 +11,47 @@ def tests():
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        mins = 0
+        mins = None
         row_len = len(grid[0])
         column_len = len(grid)
-        for row_index in range(column_len):
-            for column_index in range(row_len):
-                if (row_index * column_index) >= (row_len * column_len):
-                    return -1
-                if grid[row_index][column_index] == 2:
-                    try:
-                        if grid[row_index][column_index + 1] == 1:
-                            grid[row_index][column_index + 1] = 2
-                    except IndexError:
-                        continue
-                    try:
-                        if grid[row_index + 1][column_index] == 1:
-                            grid[row_index + 1][column_index] = 2 
-                    except IndexError:
-                        continue
-                    try:
-                        if grid[row_index][column_index - 1] == 1:
-                            grid[row_index][column_index - 1] = 2 
-                    except IndexError:
-                        continue
-                    try:
-                        if grid[row_index - 1][column_index] == 1:
-                            grid[row_index - 1][column_index] = 2 
-                    except IndexError:
-                        continue
-                    mins += 1
+
+        seen_fresh_orange = False
+        for row in grid:
+            if 1 in row:
+                seen_fresh_orange = True
+
+        if seen_fresh_orange:
+            for row_index in range(column_len):
+                for column_index in range(row_len):
+                    if grid[row_index][column_index] == 2:
+                        try:
+                            if grid[row_index][column_index + 1] == 1:
+                                grid[row_index][column_index + 1] = 2
+                        except IndexError:
+                            continue
+                        try:
+                            if grid[row_index + 1][column_index] == 1:
+                                grid[row_index + 1][column_index] = 2 
+                        except IndexError:
+                            continue
+                        try:
+                            if grid[row_index][column_index - 1] == 1:
+                                grid[row_index][column_index - 1] = 2 
+                        except IndexError:
+                            continue
+                        try:
+                            if grid[row_index - 1][column_index] == 1:
+                                grid[row_index - 1][column_index] = 2 
+                        except IndexError:
+                            continue
+                        mins += 1
+        else:
+            return 0
+
+        for row in grid:
+            if 1 in row:
+                return -1
+        
         return mins
 
 if __name__ == "__main__":
