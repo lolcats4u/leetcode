@@ -4,15 +4,16 @@ def main(test):
     print(solution)
 
 def tests():
+    test_0 = [[2,0,1,1,1,1,1,1,1,1],[1,0,1,0,0,0,0,0,0,1],[1,0,1,0,1,1,1,1,0,1],[1,0,1,0,1,0,0,1,0,1],[1,0,1,0,1,0,0,1,0,1],[1,0,1,0,1,1,0,1,0,1],[1,0,1,0,0,0,0,1,0,1],[1,0,1,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1]]
     test_1 = [[2,1,1],[1,1,0],[0,1,1]]
     test_2 = [[2,1,1],[0,1,1],[1,0,1]]
     test_3 = [[0,2]]
+    test_4 = [[1],[2]]
     return locals().values()
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         mins = 0
-
         seen_fresh_orange = False
         for row in grid:
             if 1 in row:
@@ -25,12 +26,14 @@ class Solution:
                     successful_rot = False
                     if item == 2:
                         try:
+                            # right
                             if grid[i][j + 1] == 1:
                                 grid[i][j + 1] = 2
                                 successful_rot = True
                         except IndexError:
                             pass
                         try:
+                            # left
                             if j - 1 < 0:
                                 raise IndexError
                             if grid[i][j - 1] == 1:
@@ -39,16 +42,18 @@ class Solution:
                         except IndexError:
                             pass
                         try:
-                            if grid[i + 1][j + 1]:
-                                grid[i + 1][j + 1] = 2
+                            # up
+                            if i - 1 < 0:
+                                raise IndexError
+                            if grid[i - 1][j] == 1:
+                                grid[i - 1][j] = 2
                                 successful_rot = True
                         except IndexError:
                             pass
                         try:
-                            if (i - 1) < 0 or (j - 1) < 0:
-                                raise IndexError
-                            if grid[i - 1][j - 1] == 1:
-                                grid[i - 1][j - 1] = 2
+                            # down
+                            if grid[i + 1][j] == 1:
+                                grid[i + 1][j] = 2
                                 successful_rot = True
                         except IndexError:
                             pass
@@ -57,9 +62,10 @@ class Solution:
         else:
             return 0
 
-        for row in grid:
-            if 1 in row:
-                return -1
+        if mins == 0:
+            for row in grid:
+                if 1 in row:
+                    return -1
         
         return mins
 
