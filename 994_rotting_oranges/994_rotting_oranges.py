@@ -20,14 +20,15 @@ class Solution:
                     return -1
                 if grid[row_index][column_index] == 2:
                     try:
-                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else (mins += self.orangesRotting(grid[row_index][column_index + 1]); return 1)
-                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else (mins += self.orangesRotting(grid[row_index + 1][column_index]); return 1)
-                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else (mins += self.orangesRotting(grid[row_index][column_index - 1]); return 1)
-                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else (mins += self.orangesRotting(grid[row_index - 1][column_index]); return 1)
-                    except IndexError:
-                        return 0
+                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else self.orangesRotting(grid[row_index][column_index + 1])
+                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid[row_index + 1][column_index])
+                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid[row_index][column_index - 1])
+                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid[row_index - 1][column_index])
+                        mins += 1
+                    except IndexError
+                        mins += 0
                 else:
-                    return 0
+                    mins += 0
         return mins
 
 if __name__ == "__main__":
