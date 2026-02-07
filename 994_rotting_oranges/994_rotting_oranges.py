@@ -11,44 +11,47 @@ def tests():
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        mins = None
-        row_len = len(grid[0])
-        column_len = len(grid)
+        mins = 0
 
         seen_fresh_orange = False
         for row in grid:
             if 1 in row:
                 seen_fresh_orange = True
+                break
 
         if seen_fresh_orange:
-            for row_index in range(column_len):
-                for column_index in range(row_len):
+            for i, row in enumerate(grid):
+                for j, item in enumerate(row):
                     successful_rot = False
-                    if grid[row_index][column_index] == 2:
+                    if item == 2:
                         try:
-                            if grid[row_index][column_index + 1] == 1:
-                                grid[row_index][column_index + 1] = 2
+                            if grid[i][j + 1] == 1:
+                                grid[i][j + 1] = 2
                                 successful_rot = True
                         except IndexError:
-                            continue
+                            pass
                         try:
-                            if grid[row_index + 1][column_index] == 1:
-                                grid[row_index + 1][column_index] = 2
+                            if j - 1 < 0:
+                                raise IndexError
+                            if grid[i][j - 1] == 1:
+                                grid[i][j - 1] = 2
                                 successful_rot = True
                         except IndexError:
-                            continue
+                            pass
                         try:
-                            if grid[row_index][column_index - 1] == 1:
-                                grid[row_index][column_index - 1] = 2 
+                            if grid[i + 1][j + 1]:
+                                grid[i + 1][j + 1] = 2
                                 successful_rot = True
                         except IndexError:
-                            continue
+                            pass
                         try:
-                            if grid[row_index - 1][column_index] == 1:
-                                grid[row_index - 1][column_index] = 2 
+                            if (i - 1) < 0 or (j - 1) < 0:
+                                raise IndexError
+                            if grid[i - 1][j - 1] == 1:
+                                grid[i - 1][j - 1] = 2
                                 successful_rot = True
                         except IndexError:
-                            continue
+                            pass
                         if successful_rot:
                             mins += 1
         else:
