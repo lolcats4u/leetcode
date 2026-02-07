@@ -14,50 +14,21 @@ class Solution:
         mins = 0
         row_len = len(grid[0])
         column_len = len(grid)
-        for row_index in column_len:
-            for column_index in row_len:
-                if mins > row_index * column_index:
+        for row_index in range(column_len):
+            for column_index in range(row_len):
+                if mins > (row_len * column_len):
                     return -1
-                if 1 in grid:
-                    if grid[row_index][column_index] == 2:
-                        if row_index == 1:
-                            if column_index == 1:
-                                grid[row_index][column_index + 1] = 2
-                                grid[row_index + 1][column_index] = 2
-                                mins += self.orangesRotting(grid[row_index][column_index + 1])
-                                mins += self.orangesRotting(grid[row_index + 1][column_index])
-                                return 1
-                            if column_index == row_len:
-                                grid[row_index][column_index - 1] = 2
-                                grid[row_index - 1][column_index] = 2
-                                mins += self.orangesRotting(grid[row_index][column_index - 1])
-                                mins += self.orangesRotting(grid[row_index - 1][column_index])
-                                return 1
-                        elif row_index == column_len:
-                            if  column_index == 1:
-                                grid[row_index][column_index + 1] = 2
-                                grid[row_index - 1][column_index] = 2
-                                mins += self.orangesRotting(grid[row_index][column_index + 1])
-                                mins += self.orangesRotting(grid[row_index - 1][column_index])
-                                return 1
-                            if column_index == row_len:
-                                grid[row_index][column_index - 1] = 2
-                                grid[row_index - 1][column_index] = 2
-                                mins += self.orangesRotting(grid[row_index][column_index - 1])
-                                mins += self.orangesRotting(grid[row_index - 1][column_index])
-                                return 1
-                        else:
-                            grid[row_index][column_index + 1] = 2
-                            grid[row_index][column_index - 1] = 2
-                            grid[row_index + 1][column_index] = 2
-                            grid[row_index - 1][column_index] = 2
-                            mins += self.orangesRotting(grid[row_index][column_index + 1])
-                            mins += self.orangesRotting(grid[row_index][column_index - 1])
-                            mins += self.orangesRotting(grid[row_index + 1][column_index])
-                            mins += self.orangesRotting(grid[row_index - 1][column_index])
-                            return 1
+                if grid[row_index][column_index] == 2:
+                    try:
+                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else (mins += self.orangesRotting(grid[row_index][column_index + 1]); return 1)
+                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else (mins += self.orangesRotting(grid[row_index + 1][column_index]); return 1)
+                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else (mins += self.orangesRotting(grid[row_index][column_index - 1]); return 1)
+                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else (mins += self.orangesRotting(grid[row_index - 1][column_index]); return 1)
+                    except IndexError:
+                        return 0
                 else:
-                    return mins
+                    return 0
+        return mins
 
 if __name__ == "__main__":
     tests = tests()
