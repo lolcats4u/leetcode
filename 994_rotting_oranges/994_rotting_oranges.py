@@ -11,11 +11,13 @@ def tests():
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        mins = None
+        mins = 0
         row_len = len(grid[0])
         column_len = len(grid)
         for row_index in column_len:
             for column_index in row_len:
+                if mins > row_index * column_index:
+                    return -1
                 if 1 in grid:
                     if grid[row_index][column_index] == 2:
                         if row_index == 1:
@@ -54,13 +56,8 @@ class Solution:
                             mins += self.orangesRotting(grid[row_index + 1][column_index])
                             mins += self.orangesRotting(grid[row_index - 1][column_index])
                             return 1
-                    if mins > row_index * column_index:
-                        return -1
                 else:
-                    if mins or mins == 0:
-                        return mins
-                    else:
-                        return -1
+                    return mins
 
 if __name__ == "__main__":
     tests = tests()
