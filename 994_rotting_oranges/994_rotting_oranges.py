@@ -21,12 +21,21 @@ class Solution:
                 if grid[row_index][column_index] == 2:
                     try:
                         grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else self.orangesRotting(grid)
-                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid)
-                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid)
-                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid)
-                        mins += 1
                     except IndexError:
                         continue
+                    try:
+                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid)
+                    except IndexError:
+                        continue
+                    try:
+                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid)
+                    except IndexError:
+                        continue
+                    try:
+                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid)
+                    except IndexError:
+                        continue
+                    mins += 1
                 else:
                     mins += 0
         return mins
