@@ -20,13 +20,13 @@ class Solution:
                     return -1
                 if grid[row_index][column_index] == 2:
                     try:
-                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else self.orangesRotting(grid[row_index][column_index + 1])
-                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid[row_index + 1][column_index])
-                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid[row_index][column_index - 1])
-                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid[row_index - 1][column_index])
+                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else self.orangesRotting(grid)
+                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid)
+                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid)
+                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid)
                         mins += 1
                     except IndexError:
-                        mins += 0
+                        continue
                 else:
                     mins += 0
         return mins
