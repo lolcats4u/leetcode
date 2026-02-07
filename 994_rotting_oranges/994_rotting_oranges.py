@@ -16,28 +16,30 @@ class Solution:
         column_len = len(grid)
         for row_index in range(column_len):
             for column_index in range(row_len):
-                if mins > (row_len * column_len):
+                if (row_index * column_index) >= (row_len * column_len):
                     return -1
                 if grid[row_index][column_index] == 2:
                     try:
-                        grid[row_index][column_index + 1] = 2 if grid[row_index][column_index + 1] == 1 else self.orangesRotting(grid)
+                        if grid[row_index][column_index + 1] == 1:
+                            grid[row_index][column_index + 1] = 2
                     except IndexError:
                         continue
                     try:
-                        grid[row_index + 1][column_index] = 2 if grid[row_index + 1][column_index] == 1 else self.orangesRotting(grid)
+                        if grid[row_index + 1][column_index] == 1:
+                            grid[row_index + 1][column_index] = 2 
                     except IndexError:
                         continue
                     try:
-                        grid[row_index][column_index - 1] = 2 if grid[row_index][column_index - 1] == 1 else self.orangesRotting(grid)
+                        if grid[row_index][column_index - 1] == 1:
+                            grid[row_index][column_index - 1] = 2 
                     except IndexError:
                         continue
                     try:
-                        grid[row_index - 1][column_index] = 2 if grid[row_index - 1][column_index] == 1 else self.orangesRotting(grid)
+                        if grid[row_index - 1][column_index] == 1:
+                            grid[row_index - 1][column_index] = 2 
                     except IndexError:
                         continue
                     mins += 1
-                else:
-                    mins += 0
         return mins
 
 if __name__ == "__main__":
