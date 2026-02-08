@@ -30,79 +30,84 @@ class Solution:
     def __init__(self):
         self.mins = 0
         self.recusion_depth = 0
+        self.impossible = None
+        self.original_grid = None
+
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        seen_fresh_orange = False
-        for row in grid:
-            if 1 in row:
-                seen_fresh_orange = True
-                break
+        if not self.original_grid:
+            self.original_grid = grid
+            self.grid = [x for x in self.original_grid]
+            self.number_of_elements = ((len(self.grid)) * (len(self.grid[0])))
 
-        if seen_fresh_orange:
-            for i, row in enumerate(grid):
-                for j, item in enumerate(row):
-                    successful_rot = False
-                    if item == 2:
-                        try:
-                            # right
-                            if grid[i][j + 1] == 1:
-                                grid[i][j + 1] = 2
-                                successful_rot = True
-                        except IndexError:
-                            pass
-                        try:
-                            # left
-                            if j - 1 < 0:
-                                raise IndexError
-                            if grid[i][j - 1] == 1:
-                                grid[i][j - 1] = 2
-                                successful_rot = True
-                        except IndexError:
-                            pass
-                        try:
-                            # up
-                            if i - 1 < 0:
-                                raise IndexError
-                            if grid[i - 1][j] == 1:
-                                grid[i - 1][j] = 2
-                                successful_rot = True
-                        except IndexError:
-                            pass
-                        try:
-                            # down
-                            if grid[i + 1][j] == 1:
-                                grid[i + 1][j] = 2
-                                successful_rot = True
-                        except IndexError:
-                            pass
-                        if successful_rot:
-                            self.mins += 1
+        if self.recusion_depth >= self.number_of_elements:
+            if self.mins:
+                return self.mins
+            else:
+                self.impossible = -1
+                return self.impossible
+        
+        if self.fresh_orange():
+            if self.rot_and_mutate_grid():
+                pass
+            else:
+                return self.mins
             self.recusion_depth += 1
-            try:
-                self.orangesRotting(grid)
-            except RecursionError:
-                for row in grid:
-                    if 1 in row:
-                        seen_fresh_orange = True
-                        break
-                if seen_fresh_orange:
-                    self.mins = -1
-                    class Impossible(Exception("Impossible Grid")):
-                        self.mins = -1
-
-                else:
-                    return self.mins
-            except Impossible:
-                return -1
+            self.orangesRotting(self.grid)
         else:
-            return 0
+            if self.mins:
+                return self.mins
+            else:
+                return 0
 
-        if self.mins == 0:
-            for row in grid:
-                if 1 in row:
-                    return -1
+    def fresh_orange(self):
+        for row in self.grid:
+            if 1 in row:
+                return True
 
-        return self.mins
 
+    def rot_and_mutate_grid(self):
+        successful_rot = False
+        for i, row in enumerate(self.grid):
+            for j, item in enumerate(row):
+                successful_rot = False
+                if item == 2:
+                    try:
+                        # right
+                        if self.grid[i][j + 1] == 1:
+                            self.grid[i][j + 1] = 2
+                            successful_rot = True
+                    except IndexError:
+                        pass
+                    try:
+                        # left
+                        if j - 1 < 0:
+                            raise IndexError
+                        if self.grid[i][j - 1] == 1:
+                            self.grid[i][j - 1] = 2
+                            successful_rot = True
+                    except IndexError:
+                        pass
+                    try:
+                        # up
+                        if i - 1 < 0:
+                            raise IndexError
+                        if self.grid[i - 1][j] == 1:
+                            self.grid[i - 1][j] = 2
+                            successful_rot = True
+                    except IndexError:
+                        pass
+                    try:
+                        # down
+                        if self.grid[i + 1][j] == 1:
+                            self.grid[i + 1][j] = 2
+                            successful_rot = True
+                    except IndexError:
+                        pass
+
+                if successful_rot:
+                    self.mins += 1
+                    
+        return successful_rot
 
 if __name__ == "__main__":
     tests = tests()
