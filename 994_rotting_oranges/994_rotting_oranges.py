@@ -1,19 +1,36 @@
 from typing import List
+
+
 def main(test):
     solution = Solution().orangesRotting(test)
     print(solution)
 
+
 def tests():
-    test_0 = [[2,0,1,1,1,1,1,1,1,1],[1,0,1,0,0,0,0,0,0,1],[1,0,1,0,1,1,1,1,0,1],[1,0,1,0,1,0,0,1,0,1],[1,0,1,0,1,0,0,1,0,1],[1,0,1,0,1,1,0,1,0,1],[1,0,1,0,0,0,0,1,0,1],[1,0,1,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1]]
-    test_1 = [[2,1,1],[1,1,0],[0,1,1]]
-    test_2 = [[2,1,1],[0,1,1],[1,0,1]]
-    test_3 = [[0,2]]
-    test_4 = [[1],[2]]
+    test_0 = [
+        [2, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ]
+    test_1 = [[2, 1, 1], [1, 1, 0], [0, 1, 1]]
+    test_2 = [[2, 1, 1], [0, 1, 1], [1, 0, 1]]
+    test_3 = [[0, 2]]
+    test_4 = [[1], [2]]
     return locals().values()
 
+
 class Solution:
+    def __init__(self):
+        self.mins = 0
+        self.recusion_depth = 0
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        mins = 0
         seen_fresh_orange = False
         for row in grid:
             if 1 in row:
@@ -58,16 +75,34 @@ class Solution:
                         except IndexError:
                             pass
                         if successful_rot:
-                            mins += 1
+                            self.mins += 1
+            self.recusion_depth += 1
+            try:
+                self.orangesRotting(grid)
+            except RecursionError:
+                for row in grid:
+                    if 1 in row:
+                        seen_fresh_orange = True
+                        break
+                if seen_fresh_orange:
+                    self.mins = -1
+                    class Impossible(Exception("Impossible Grid")):
+                        self.mins = -1
+
+                else:
+                    return self.mins
+            except Impossible:
+                return -1
         else:
             return 0
 
-        if mins == 0:
+        if self.mins == 0:
             for row in grid:
                 if 1 in row:
                     return -1
-        
-        return mins
+
+        return self.mins
+
 
 if __name__ == "__main__":
     tests = tests()
