@@ -28,6 +28,7 @@ class Solution:
             if char in self.reverse_paren_dict.values():
                 self.stack.append(char)
             elif char in self.reverse_paren_dict.keys():
+                #if the stack doesn't exist, or if the first character isn't the compliment of the char
                 if not self.stack or self.reverse_paren_dict[char] != self.stack.pop():
                     return False
         return not self.stack
