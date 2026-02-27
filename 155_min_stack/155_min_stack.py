@@ -3,21 +3,23 @@ def main(test):
     for test_operation in test:
         if test_operation[0] == "MinStack":
             solution = MinStack()
-            continue
-        if test_operation[0] == "push":
+            
+        elif test_operation[0] == "push":
             solution.push(test_operation[1])
-            continue
-        if test_operation[0] == "pop":
+
+        elif test_operation[0] == "pop":
             solution.pop()
-            continue
-        if test_operation[0] == "top":
+
+        elif test_operation[0] == "top":
             top = solution.top()
             print(top)
-            continue
-        if test_operation[0] == "getMin":
+
+        elif test_operation[0] == "getMin":
             min = solution.getMin()
             print(min)
-            continue
+        else: 
+            raise ValueError
+
 
     print(solution.stack)
     return solution.stack
