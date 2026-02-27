@@ -1,9 +1,8 @@
-
 def main(test):
     for test_operation in test:
         if test_operation[0] == "MinStack":
             solution = MinStack()
-            
+
         elif test_operation[0] == "push":
             solution.push(test_operation[1])
 
@@ -17,12 +16,12 @@ def main(test):
         elif test_operation[0] == "getMin":
             min = solution.getMin()
             print(min)
-        else: 
+        else:
             raise ValueError
-
 
     print(solution.stack)
     return solution.stack
+
 
 class MinStack:
     def __init__(self):
@@ -34,18 +33,20 @@ class MinStack:
     def pop(self) -> None:
         self.stack = self.stack[1:]
 
-
     def top(self) -> int:
         return self.stack[0]
-        
 
     def getMin(self) -> int:
         return min(self.stack)
 
 
 def tests():
-    test_0 = zip(["MinStack","push","push","push","getMin","pop","top","getMin"], [[],[-2],[0],[-3],[],[],[],[]])
+    test_0 = zip(
+        ["MinStack", "push", "push", "push", "getMin", "pop", "top", "getMin"],
+        [[], [-2], [0], [-3], [], [], [], []],
+    )
     return locals().values()
+
 
 if __name__ == "__main__":
     tests = tests()
