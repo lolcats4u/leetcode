@@ -1,7 +1,10 @@
 from typing import *
+
+
 def main(test):
     solution = Solution().some_func()
     print(solution)
+
 
 # Definition for singly-linked list.
 class ListNode:
@@ -9,9 +12,10 @@ class ListNode:
         self.val = val
         self.next = next
 
+
 class LinkedList:
     def __init__(self, head: Optional[ListNode]):
-        self.head = head 
+        self.head = head
         self.tail = self.traverse()
 
     def traverse(self):
@@ -24,7 +28,7 @@ class LinkedList:
             else:
                 break
         return current_node
-    
+
     def append(self, ListNode):
         ListNode.next = None
         if not self.head:
@@ -50,13 +54,16 @@ class LinkedList:
         self.reversed = reversed_list
         return self.reversed
 
+
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         pass
 
+
 def tests():
     pass
     return locals().values()
+
 
 if __name__ == "__main__":
     tests = tests()
